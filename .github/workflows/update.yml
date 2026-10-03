@@ -22,6 +22,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SHEET_ID: ${{ secrets.SHEET_ID }}
+      GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -33,10 +36,7 @@ jobs:
       - name: quality gate (fail stops deploy)
         run: python -m pytest -q
       - name: sync overrides from Google Sheet (optional)
-        if: ${{ secrets.SHEET_ID != '' }}
-        env:
-          SHEET_ID: ${{ secrets.SHEET_ID }}
-          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        if: env.SHEET_ID != ''
         run: python tools/sheet_sync.py --sheet-id "$SHEET_ID" --overrides-out data/overrides.json
       - name: apply overrides
         run: python tools/apply_overrides.py data/schedule.json --overrides data/overrides.json --out data/schedule.json
