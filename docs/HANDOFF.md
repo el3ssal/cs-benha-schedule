@@ -4,7 +4,8 @@
 > **Session 1 paused:** 2026-10-03 (context limit). Arabic PDF extraction research was in progress.
 > **Session 2 paused:** 2026-10-03 (context limit). **⏸️ MAJOR: PDF parsing ABANDONED by Ahmed's decision — data now comes from scheadel's `const DATA`; future PDF updates are analyzed by ChatGPT (see `docs/PROMPTS.md`).** Session 2 resolved both open issues, proved schema facts, and rewrote T1/T2 in the plan.
 > **Session 3 done:** 2026-10-03 — T1 (import) + T2 (29 pytest green) + T3 (overrides) + T4 (diff) + T5/T6/T7 (UI, verified in-browser) + T8/T9 (CI/update workflows) + T13 (PWA) + T15 (README). **No git repo yet, NO commits.**
-> **➡️ NEXT: T0 (`git init`, needs approval) → T10 (publish, needs `--public` confirmation + commit message) → T11 (Sheet) + T12 (Apps Script) — all need Ahmed. Plan file T1/T2/T3/T4/T9 notes still authoritative.**
+> **Session 4 done:** 2026-10-03 — Ahmed approved everything: T0 (`git init`, local identity) + first commit `1fae765` + T10 (**PUBLIC** repo `el3ssal/cs-benha-schedule`, pushed, Pages live at `https://el3ssal.github.io/cs-benha-schedule/`) + T11 code (`tools/sheet_sync.py`, `gspread` installed approved, 8 parser tests) + T12 code (`gas/Code.gs`) + fixed `update.yml` (`secrets`→`env` in `if`, +`workflow_dispatch`) — update.yml run green, diff artifact OK. Total **37 pytest passed**.
+> **➡️ NEXT: manual steps only Ahmed can do — create the Google Sheet + share with the service-account email as Editor (+ set `SHEET_ID`/`GOOGLE_SERVICE_ACCOUNT_JSON` secrets); paste `gas/Code.gs` in script.google.com + deploy web app (+ PAT in Script Properties). Plan file T1/T2/T3/T4/T9 notes still authoritative.**
 
 ---
 
