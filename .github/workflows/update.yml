@@ -9,6 +9,7 @@ on:
   push:
     branches: [main]
     paths: ["data/**"]
+  workflow_dispatch: {}
 
 permissions:
   contents: read
