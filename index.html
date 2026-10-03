@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>جدول محاضرات حاسبات بنها</title>
+  <meta name="description" content="جدول محاضرات كلية الحاسبات والذكاء الاصطناعي — جامعة بنها. اختر مستواك ومجموعتك والسكشن لعرض مواعيدك.">
+  <meta name="theme-color" content="#FAFAF8">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/svg+xml" href="./icons/favicon.svg">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/print.css" media="print">
+</head>
+<body>
+  <a class="skip-link" href="#results">تخطَّ إلى النتائج</a>
+  <div class="page">
+    <header class="site-header">
+      <div class="brand-row">
+        <div class="brand-mark" aria-hidden="true">CS</div>
+        <p class="kicker">جامعة بنها · كلية الحاسبات والذكاء الاصطناعي</p>
+      </div>
+      <h1>جدول المحاضرات</h1>
+      <p class="lede">اختر المستوى والمجموعة/التخصص والسكشن لعرض مواعيدك — تُحفظ اختياراتك على جهازك.</p>
+    </header>
+
+    <main>
+      <section class="card selectors" aria-label="اختيار الجدول">
+        <div>
+          <label class="field-label" id="level_title">المستوى</label>
+          <div class="pills" id="level_pills" role="group" aria-labelledby="level_title"></div>
+          <select class="native-select" id="level_select" aria-labelledby="level_title"></select>
+        </div>
+        <div>
+          <label class="field-label" id="cat_title">المجموعة / التخصص</label>
+          <div class="pills" id="cat_pills" role="group" aria-labelledby="cat_title"></div>
+          <select class="native-select" id="cat_select" aria-labelledby="cat_title"></select>
+        </div>
+        <div>
+          <label class="field-label" id="section_title">السكشن</label>
+          <div class="pills" id="section_pills" role="group" aria-labelledby="section_title"></div>
+          <select class="native-select" id="section_select" aria-labelledby="section_title"></select>
+        </div>
+        <p class="summary" id="selection_summary"></p>
+      </section>
+
+      <div id="results" aria-live="polite">
+        <section class="card today-card" id="today_card" aria-label="مواعيد اليوم"></section>
+        <section class="week" aria-label="باقي الأسبوع">
+          <div class="week-head">
+            <h2>الأسبوع</h2>
+            <label class="toggle">
+              <input type="checkbox" id="full_week_toggle" checked>
+              عرض الأسبوع كاملًا
+            </label>
+          </div>
+          <div class="week-grid" id="week_grid"></div>
+        </section>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="print_button" type="button">طباعة / PDF</button>
+        <button class="btn" id="share_button" type="button">مشاركة رابط اختياري</button>
+        <button class="btn" id="update_button" type="button">تحديث الجدول</button>
+      </div>
+      <p class="state" id="action_status" role="status"></p>
+    </main>
+
+    <footer class="site-footer">
+      <div>المصدر: جدول الكلية الرسمي · <span id="meta_line">جارٍ تحميل بيانات التحديث…</span></div>
+      <div>يعمل دون اتصال بعد أول زيارة (PWA).</div>
+    </footer>
+  </div>
+
+  <dialog id="update_dialog" aria-labelledby="update_dialog_title">
+    <h2 id="update_dialog_title">تحديث الجدول</h2>
+    <p>لتحديث البيانات لنسخة جديدة من جدول الكلية:</p>
+    <ol>
+      <li>يُحلَّل ملف الـ PDF الجديد عبر ChatGPT حسب <code>docs/PROMPTS.md</code> (التعليمة A).</li>
+      <li>تُسلَّم النتيجة مع التعليمة B فيُتحقق منها آليًا وتُنشر بعد الموافقة.</li>
+    </ol>
+    <p>التفاصيل الكاملة في <code>README.md</code>. رفع الملفات من الموقع نفسه (T12) لم يُبنَ بعد.</p>
+    <form method="dialog"><button class="btn btn-primary" type="submit">إغلاق</button></form>
+  </dialog>
+
+  <noscript><p class="state-error">هذه الصفحة تحتاج JavaScript لعرض الجدول.</p></noscript>
+  <script src="./js/data.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+</html>

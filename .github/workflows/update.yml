@@ -1,0 +1,64 @@
+name: update-schedule
+
+# No PDF extraction happens in CI: data/schedule.json arrives already
+# validated (ChatGPT PROMPT A -> agent PROMPT B -> pytest -> approved commit).
+# This workflow only re-runs the quality gate, applies Sheet overrides,
+# writes a version diff, then deploys to GitHub Pages.
+
+on:
+  push:
+    branches: [main]
+    paths: ["data/**"]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+      - run: pip install -r requirements-dev.txt
+      - name: quality gate (fail stops deploy)
+        run: python -m pytest -q
+      - name: sync overrides from Google Sheet (optional)
+        if: ${{ secrets.SHEET_ID != '' }}
+        env:
+          SHEET_ID: ${{ secrets.SHEET_ID }}
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: python tools/sheet_sync.py --sheet-id "$SHEET_ID" --overrides-out data/overrides.json
+      - name: apply overrides
+        run: python tools/apply_overrides.py data/schedule.json --overrides data/overrides.json --out data/schedule.json
+      - name: diff vs previous version
+        run: |
+          git show HEAD~1:data/schedule.json > /tmp/prev_schedule.json 2>/dev/null || echo '{"events":[]}' > /tmp/prev_schedule.json
+          python tools/diff_schedule.py /tmp/prev_schedule.json data/schedule.json --out diff-report.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: diff-report
+          path: diff-report.md
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

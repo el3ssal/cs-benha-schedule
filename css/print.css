@@ -1,0 +1,30 @@
+@media print {
+  .site-header .lede,
+  .selectors,
+  .actions,
+  #action_status,
+  .site-footer,
+  .skip-link,
+  dialog {
+    display: none !important;
+  }
+
+  body { background: #fff; font-size: 12px; line-height: 1.5; }
+  .page { max-width: none; padding: 0; }
+
+  .card, .today-card {
+    box-shadow: none;
+    border: 1px solid #999;
+    break-inside: avoid;
+  }
+
+  .week-grid { grid-template-columns: 1fr 1fr; }
+  .day-card { break-inside: avoid; }
+
+  .event-time {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  @page { size: A4; margin: 12mm; }
+}

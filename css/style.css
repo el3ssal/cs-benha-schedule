@@ -1,0 +1,259 @@
+/* Cairo self-hosted subsets (arabic + latin/digits only) */
+@font-face {
+  font-family: "Cairo";
+  src: url("../fonts/cairo-400-arabic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+}
+@font-face {
+  font-family: "Cairo";
+  src: url("../fonts/cairo-400-latin.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+2000-206F;
+}
+@font-face {
+  font-family: "Cairo";
+  src: url("../fonts/cairo-700-arabic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+}
+@font-face {
+  font-family: "Cairo";
+  src: url("../fonts/cairo-700-latin.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+2000-206F;
+}
+
+:root {
+  --bg: #fafaf8;
+  --surface: #fff;
+  --ink: #1a1a1a;
+  --muted: #6b7280;
+  --line: #e5e7eb;
+  --primary: #2563eb;
+  --primary-soft: #eff6ff;
+  --ring: rgba(37, 99, 235, 0.35);
+  --radius-card: 18px;
+  --radius-control: 12px;
+  --shadow-card:
+    0 1px 2px rgba(16, 24, 40, 0.04),
+    0 8px 24px rgba(16, 24, 40, 0.06);
+  --fs-hero: clamp(26px, 4vw, 38px);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Cairo", "Segoe UI", Tahoma, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.skip-link {
+  position: absolute;
+  inset-inline-start: 12px;
+  top: -48px;
+  background: var(--primary);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: var(--radius-control);
+  transition: top 0.15s ease;
+}
+.skip-link:focus { top: 12px; color: #fff; }
+
+:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.page {
+  max-width: 1080px;
+  margin-inline: auto;
+  padding: 20px 16px 48px;
+}
+
+.site-header { padding: 28px 0 8px; }
+.brand-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.brand-mark {
+  inline-size: 44px;
+  block-size: 44px;
+  border-radius: 14px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+}
+.kicker {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+.site-header h1 {
+  font-size: var(--fs-hero);
+  line-height: 1.3;
+  margin: 10px 0 4px;
+}
+.lede { margin: 0 0 6px; color: var(--muted); }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: 18px;
+}
+
+.selectors { margin: 18px 0; display: grid; gap: 14px; }
+.field-label { font-weight: 700; margin-bottom: 8px; display: block; }
+
+.pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font: inherit;
+  cursor: pointer;
+}
+.pill[aria-pressed="true"] {
+  background: var(--primary-soft);
+  border-color: var(--primary);
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.native-select {
+  inline-size: 100%;
+  font: inherit;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+/* pills on desktop, native selects on mobile */
+@media (max-width: 640px) {
+  .pills { display: none; }
+}
+@media (min-width: 641px) {
+  .native-select { display: none; }
+}
+
+.summary { color: var(--muted); font-size: 14px; }
+.summary strong { color: var(--ink); }
+
+.today-card {
+  margin: 0 0 18px;
+  border-color: var(--primary);
+  background: linear-gradient(180deg, var(--primary-soft), var(--surface) 140%);
+}
+.today-card h2, .week h2 { margin: 0 0 10px; font-size: 20px; }
+
+.week-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.week-head h2 { margin: 0; }
+.toggle { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+.toggle input { inline-size: 18px; block-size: 18px; accent-color: var(--primary); }
+
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+}
+.day-card h3 { margin: 0 0 8px; font-size: 17px; }
+
+.event {
+  display: grid;
+  grid-template-columns: 132px 1fr;
+  gap: 10px;
+  padding: 10px 0;
+  border-top: 1px dashed var(--line);
+}
+.event:first-of-type { border-top: 0; }
+.event-time {
+  background: var(--primary-soft);
+  color: var(--primary);
+  border-radius: var(--radius-control);
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 4px;
+  white-space: nowrap;
+}
+.time { direction: ltr; unicode-bidi: embed; }
+.event-text { margin: 0; }
+
+.state { color: var(--muted); }
+.state-error { color: #b91c1c; }
+.skeleton {
+  border-radius: var(--radius-control);
+  background: linear-gradient(90deg, var(--line), #f3f4f6, var(--line));
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+  min-block-size: 64px;
+}
+@keyframes shimmer {
+  to { background-position: -200% 0; }
+}
+
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.btn {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  border-radius: var(--radius-control);
+  padding: 10px 18px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.btn-primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+.site-footer {
+  margin-top: 26px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 14px;
+  display: grid;
+  gap: 10px;
+}
+
+dialog {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  padding: 22px;
+  max-inline-size: 560px;
+}
+dialog::backdrop { background: rgba(16, 24, 40, 0.4); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .skeleton { animation: none; }
+}
