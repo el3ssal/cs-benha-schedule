@@ -1,0 +1,16 @@
+# Normalize line endings: code and data always LF (GitHub Pages serves
+# blobs raw, so CRLF checkouts would differ byte-for-byte from production).
+* text=auto
+*.json text eol=lf
+*.py text eol=lf
+*.js text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.yml text eol=lf
+*.md text eol=lf
+*.gs text eol=lf
+*.svg text eol=lf
+*.png binary
+*.woff2 binary
+*.pdf binary
+*.ico binary
